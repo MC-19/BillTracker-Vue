@@ -48,6 +48,38 @@ Por defecto, el frontend estará en `http://localhost:5173/` y el backend en `ht
 
 ---
 
+## 🚀 Dependencias
+
+### 🔹 Backend (NestJS)
+- @nestjs/cli@11.0.5
+- @nestjs/common@11.0.11
+- @nestjs/config@4.0.1
+- @nestjs/core@11.0.11
+- @nestjs/platform-express@11.0.11
+- @nestjs/schematics@11.0.2
+- @nestjs/testing@11.0.11
+- @nestjs/typeorm@11.0.0
+- @types/node@22.13.9
+- pg@8.13.3
+- reflect-metadata@0.2.2
+- rxjs@7.8.2
+- typeorm@0.3.21
+- typescript@5.8.2
+
+### 🔹 Frontend (Vue 3 + Vite)
+- @vitejs/plugin-vue@5.2.1
+- @vue/compiler-sfc@3.5.13
+- @vue/tsconfig@0.7.0
+- axios@1.8.1
+- pinia@3.0.1
+- tailwindcss@4.0.11
+- vite@6.2.0
+- vue-router@4.5.0
+- vue-tsc@2.2.8
+- vue@3.5.13
+
+---
+
 ## 🚀 Despliegue
 
 Para desplegar tu aplicación, revisa las opciones disponibles:
