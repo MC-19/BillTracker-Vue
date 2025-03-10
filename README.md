@@ -21,7 +21,7 @@ Asegúrate de tener instalado:
 
 ### 🔹 Clonar el repositorio
 ```bash
-git clone https://github.com/tuusuario/BillTracker.git
+https://github.com/MC-19/BillTracker-Vue.git
 cd BillTracker
 ```
 
