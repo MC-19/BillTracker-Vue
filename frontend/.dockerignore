@@ -1,0 +1,9 @@
+# Ignorar node_modules para no copiarlo al contexto de Docker
+node_modules
+
+# Ignorar la carpeta de compilación si la tuvieras
+dist
+
+# Ignorar configuraciones locales
+.vscode
+.env
