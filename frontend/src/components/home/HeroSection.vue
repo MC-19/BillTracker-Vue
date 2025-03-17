@@ -1,15 +1,14 @@
 <template>
   <section
-    class="relative w-full min-h-[60vh] flex flex-col justify-start items-center text-center overflow-hidden
-          bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 px-6 pt-10"
+    class="relative w-full flex flex-col justify-start items-center text-center overflow-hidden
+          bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 px-6 py-20 "
   >
     <!-- Imagen izquierda (Decoración) -->
     <img
-  src="@/assets/images/home/brazo-c.png"
-  alt="Decoración izquierda"
-  class="hidden md:block absolute top-20 left-image"
-/>
-
+      src="@/assets/images/home/brazo-c.png"
+      alt="Decoración izquierda"
+      class="hidden md:block absolute top-20 left-image"
+    />
 
     <!-- Contenido principal -->
     <div class="z-10 max-w-3xl text-black mt-10">
@@ -55,4 +54,3 @@
   left: 90px; /* Ajusta el valor según lo que necesites */
 }
 </style>
-
