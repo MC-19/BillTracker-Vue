@@ -6,6 +6,7 @@
   import Facturacion from "@/components/home/Facturacion.vue";
   import PersonalizaFacturas from "@/components/home/Personaliza-facturas.vue";
   import ControlaIngresos from "@/components/home/Controla-ingresos.vue";
+  import Prueba30d from "@/components/home/Prueba30d.vue";
   import Footer from "@/components/home/Footer.vue";
 </script>
 
@@ -18,6 +19,7 @@
     <Facturacion/>
     <PersonalizaFacturas/>
     <ControlaIngresos/>
+    <Prueba30d/>
     <Footer/>
   </div>  
 </template>
