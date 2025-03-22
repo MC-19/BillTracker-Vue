@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-
-
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -12,32 +13,57 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
-  async create(user: User): Promise<User> {
-    const existingUser = await this.userRepository.findOne({ where: { email: user.email } });
+  // ✅ Crear usuario (Solo 1 vez)
+  async create(userDto: CreateUserDto): Promise<User> {
+    const existingUser = await this.userRepository.findOne({ where: { email: userDto.email } });
     if (existingUser) {
-      throw new Error('Este email ya está registrado');
+      throw new ConflictException('Este email ya está registrado');
     }
-    return this.userRepository.save(user);
+  
+    // 📌 Aquí solo se guarda la contraseña, ya fue encriptada en AuthService.register()
+    const newUser = this.userRepository.create({
+      email: userDto.email,
+      password: userDto.password, // ✅ Ahora solo se guarda sin volver a encriptar
+      firstName: userDto.firstName,
+      lastName1: userDto.lastName1,
+      lastName2: userDto.lastName2,
+    });
+  
+    return this.userRepository.save(newUser);
   }
+  
+  
+  
 
-  async update(id: number, userData: Partial<User>): Promise<User> {
+  // ✅ Modificar usuario
+  async update(id: number, updateData: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
 
-    Object.assign(user, userData);
+    if (updateData.password) {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(updateData.password, salt);
+    }
+
+    Object.assign(user, updateData);
     return this.userRepository.save(user);
   }
 
+  // ✅ Eliminar usuario
   async delete(id: number): Promise<void> {
     const result = await this.userRepository.delete(id);
     if (result.affected === 0) {
       throw new NotFoundException('Usuario no encontrado');
     }
   }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ email });
+  }    
 }

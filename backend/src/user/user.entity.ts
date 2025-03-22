@@ -1,25 +1,30 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;  // ✅ Nombre
-
-  @Column()
-  lastName: string;  // ✅ Apellidos
-
   @Column({ unique: true })
-  email: string;  // ✅ Email único
+  email: string;
 
-  @Column()
-  password: string;  // ✅ Contraseña
+  @Exclude()
+  @Column({ type: 'text' })
+  password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;  // ✅ Fecha de creación automática
+  @Column({ nullable: true, type: 'text' })
+  firstName: string | null;
 
-  @UpdateDateColumn()
-  updatedAt: Date;  // ✅ Fecha de última actualización automática
+  @Column({ nullable: true, type: 'text' })
+  lastName1: string | null;
+
+  @Column({ nullable: true, type: 'text' })
+  lastName2: string | null;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }

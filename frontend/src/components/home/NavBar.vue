@@ -19,12 +19,29 @@
 
       <!-- Botones -->
       <div class="hidden xl:flex space-x-3 whitespace-nowrap">
-        <button class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-          Acceder
-        </button>
-        <button class="px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
-          Regístrate gratis
-        </button>
+        <template v-if="!isAuthenticated">
+          <router-link to="/login">
+            <button class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+              Acceder
+            </button>
+          </router-link>
+          <router-link to="/register">
+            <button class="px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
+              Regístrate gratis
+            </button>
+          </router-link>
+        </template>
+
+        <template v-else>
+          <router-link to="/dashboard">
+            <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-200">
+              Mi Cuenta
+            </button>
+          </router-link>
+          <button @click="logout" class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+            Cerrar sesión
+          </button>
+        </template>
       </div>
 
       <!-- Botón menú hamburguesa -->
@@ -46,24 +63,57 @@
         <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Factura electrónica</a></li>
         <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Precios</a></li>
         <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Recursos ▾</a></li>
-        
+
         <!-- Botones en menú móvil -->
-        <li class="pt-4">
-          <button class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-            Acceder
-          </button>
-        </li>
-        <li>
-          <button class="w-full px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
-            Regístrate gratis
-          </button>
-        </li>
+        <template v-if="!isAuthenticated">
+          <li class="pt-4">
+            <router-link to="/login">
+              <button class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+                Acceder
+              </button>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/register">
+              <button class="w-full px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
+                Regístrate gratis
+              </button>
+            </router-link>
+          </li>
+        </template>
+
+        <template v-else>
+          <li class="pt-4">
+            <router-link to="/dashboard">
+              <button class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-200">
+                Mi Cuenta
+              </button>
+            </router-link>
+          </li>
+          <li>
+            <button @click="logout" class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+              Cerrar sesión
+            </button>
+          </li>
+        </template>
       </ul>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const menuAbierto = ref(false);
+
+// Verifica si hay un token JWT almacenado
+const isAuthenticated = computed(() => !!localStorage.getItem("token"));
+
+// Función para cerrar sesión
+const logout = () => {
+  localStorage.removeItem("token"); // Eliminar el token
+  router.push("/login"); // Redirigir al login
+};
 </script>

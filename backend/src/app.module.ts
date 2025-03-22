@@ -1,20 +1,31 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',  // ⚠️ Asegúrate de que la DB está corriendo
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT) || 5432,
-      username: process.env.DB_USER || 'admin',
-      password: process.env.DB_PASS || 'admin123',
-      database: process.env.DB_NAME || 'tienda_db',
-      autoLoadEntities: true,
-      synchronize: true, // ⚠️ SOLO para desarrollo
+    ConfigModule.forRoot({ isGlobal: true }), // ✅ Habilita .env en toda la app
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASS'),
+        database: configService.get<string>('DB_NAME'),
+        autoLoadEntities: true,
+        synchronize: process.env.NODE_ENV !== 'production', // ⚠️ Solo en desarrollo
+      }),
     }),
-    UserModule,  // ✅ Importar UserModule
+    UserModule,
+    AuthModule,
+    MailModule,
   ],
 })
 export class AppModule {}
+
