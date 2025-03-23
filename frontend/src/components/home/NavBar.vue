@@ -19,7 +19,7 @@
 
       <!-- Botones -->
       <div class="hidden xl:flex space-x-3 whitespace-nowrap">
-        <template v-if="!isAuthenticated">
+        <template v-if="!authStore.isAuthenticated">
           <router-link to="/login">
             <button class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
               Acceder
@@ -45,7 +45,7 @@
       </div>
 
       <!-- Botón menú hamburguesa -->
-      <button @click="menuAbierto = !menuAbierto" class="xl:hidden focus:outline-none">
+      <button @click="toggleMenu" class="xl:hidden focus:outline-none">
         <div class="flex items-center space-x-2 border px-3 py-2 rounded-md">
           <span class="text-gray-800 font-medium">MENÚ</span>
           <svg class="w-10 h-10 text-gray-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -58,23 +58,23 @@
     <!-- Menú móvil -->
     <div v-if="menuAbierto" class="xl:hidden bg-white shadow-md">
       <ul class="flex flex-col space-y-4 p-4 text-gray-800 font-medium">
-        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Negocios ▾</a></li>
-        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Funcionalidades ▾</a></li>
-        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Factura electrónica</a></li>
-        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Precios</a></li>
-        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200">Recursos ▾</a></li>
+        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Negocios ▾</a></li>
+        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Funcionalidades ▾</a></li>
+        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Factura electrónica</a></li>
+        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Precios</a></li>
+        <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Recursos ▾</a></li>
 
         <!-- Botones en menú móvil -->
-        <template v-if="!isAuthenticated">
+        <template v-if="!authStore.isAuthenticated">
           <li class="pt-4">
-            <router-link to="/login">
+            <router-link to="/login" @click="closeMenu">
               <button class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
                 Acceder
               </button>
             </router-link>
           </li>
           <li>
-            <router-link to="/register">
+            <router-link to="/register" @click="closeMenu">
               <button class="w-full px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
                 Regístrate gratis
               </button>
@@ -84,7 +84,7 @@
 
         <template v-else>
           <li class="pt-4">
-            <router-link to="/dashboard">
+            <router-link to="/dashboard" @click="closeMenu">
               <button class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-200">
                 Mi Cuenta
               </button>
@@ -102,18 +102,28 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
+const authStore = useAuthStore();
 const menuAbierto = ref(false);
 
-// Verifica si hay un token JWT almacenado
-const isAuthenticated = computed(() => !!localStorage.getItem("token"));
+// ✅ Función para abrir/cerrar el menú móvil
+const toggleMenu = () => {
+  menuAbierto.value = !menuAbierto.value;
+};
 
-// Función para cerrar sesión
+// ✅ Función para cerrar el menú al hacer clic en un enlace
+const closeMenu = () => {
+  menuAbierto.value = false;
+};
+
+// ✅ Función para cerrar sesión y redirigir al login
 const logout = () => {
-  localStorage.removeItem("token"); // Eliminar el token
-  router.push("/login"); // Redirigir al login
+  authStore.logout();
+  router.push("/login");
+  closeMenu();
 };
 </script>

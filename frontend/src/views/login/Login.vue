@@ -1,76 +1,37 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import axios from "axios";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../../stores/auth";
 
 const router = useRouter();
+const authStore = useAuthStore();
+
 const credentials = ref({ email: "", password: "" });
 const loading = ref(false);
 const errorMessage = ref("");
-const successMessage = ref(""); // 🔥 Agregar esta línea
 
+// ✅ Función para iniciar sesión
 const loginUser = async () => {
   errorMessage.value = "";
-  successMessage.value = ""; // 🔥 Asegurar que se inicializa antes de la solicitud
-
   if (!credentials.value.email || !credentials.value.password) {
     errorMessage.value = "Todos los campos son obligatorios.";
     return;
   }
 
-  try {
-    loading.value = true;
+  loading.value = true;
+  const success = await authStore.login(credentials.value.email, credentials.value.password);
 
-    // Verificar que la API URL esté configurada
-    const apiUrl = import.meta.env.VITE_API_URL;
-    if (!apiUrl) {
-      console.error("❌ VITE_API_URL no está definido.");
-      errorMessage.value = "Error interno, intenta más tarde.";
-      return;
-    }
-
-    // Hacer la petición al backend
-    const response = await axios.post(`${apiUrl}/auth/login`, {
-      email: credentials.value.email,
-      password: credentials.value.password,
-    });
-
-    if (!response.data.access_token) {
-      throw new Error("❌ No se recibió el token de autenticación.");
-    }
-
-    console.log("✅ Token recibido:", response.data.access_token);
-
-    // Guardar el token en localStorage
-    localStorage.setItem("token", response.data.access_token);
-
-    // Mensaje de éxito y redirección
-    successMessage.value = "Inicio de sesión exitoso."; // ✅ Ahora sí está definido
-    setTimeout(() => router.push("/dashboard"), 1000);
-  } catch (error: any) {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          errorMessage.value = "Correo o contraseña incorrectos.";
-          break;
-        case 500:
-          errorMessage.value = "Error en el servidor. Inténtalo más tarde.";
-          break;
-        default:
-          errorMessage.value = "Error desconocido. Inténtalo de nuevo.";
-          break;
-      }
-    } else if (error.request) {
-      errorMessage.value = "No se pudo conectar con el servidor.";
-    } else {
-      errorMessage.value = "Ocurrió un error inesperado.";
-    }
-    console.error(error);
-  } finally {
-    loading.value = false;
+  if (success) {
+    await authStore.fetchUser(); // 🔥 Recuperar datos del usuario al hacer login
+    router.push("/"); // Redirigir al home si el login es correcto
+  } else {
+    errorMessage.value = "Correo o contraseña incorrectos."; // Mostrar error solo si falla
   }
+
+  loading.value = false;
 };
 </script>
+
 
 
 <template>
