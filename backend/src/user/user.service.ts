@@ -41,27 +41,31 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
-
+  
     if (updateData.password) {
       const salt = await bcrypt.genSalt(10);
       updateData.password = await bcrypt.hash(updateData.password, salt);
     }
-
+  
     Object.assign(user, updateData);
     return this.userRepository.save(user);
-  }
+  }  
 
   // ✅ Eliminar usuario
   async delete(id: number): Promise<void> {
-    const result = await this.userRepository.delete(id);
-    if (result.affected === 0) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
+  
+    user.active = false; // ❌ En vez de eliminar, lo desactivamos
+    await this.userRepository.save(user);
   }
+  
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
+    return this.userRepository.find({ where: { active: true } });
+  }  
 
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepository.findOneBy({ email });

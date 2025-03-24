@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("auth", {
     },
 
     async fetchUser() {
-      if (!this.token) return;
+      if (!this.token) return null;
     
       try {
         console.log("📡 Haciendo petición a /auth/me con token:", this.token);
@@ -50,11 +50,14 @@ export const useAuthStore = defineStore("auth", {
     
         this.user = response.data;
         localStorage.setItem("user", JSON.stringify(this.user));
+    
+        return this.user; // ✅ Ahora retorna el usuario correctamente
       } catch (error) {
         console.error("❌ Error obteniendo el usuario:", error);
         this.logout();
+        return null; // ✅ Devolver null si hay un error
       }
-    }    
+    }     
   },
 
   getters: {

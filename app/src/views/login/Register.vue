@@ -1,85 +1,160 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import axios from "axios";
+import { useAuthStore } from "../../stores/auth"; 
+import { useRouter } from "vue-router";
 
-// Estado reactivo para el formulario
-const newUser = ref({ email: "", password: "" });
+const authStore = useAuthStore();
+const router = useRouter();
+
+const newUser = ref({ email: "", password: "", confirmPassword: "" });
 const loading = ref(false);
-const errorMessage = ref("");
 const successMessage = ref("");
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+const errors = ref({
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
 
-// Función para registrar un nuevo usuario
+// ✅ Validar formulario antes de enviarlo
+const validateForm = () => {
+  errors.value = { email: "", password: "", confirmPassword: "" };
+
+  if (!newUser.value.email) {
+    errors.value.email = "El correo es obligatorio.";
+  } else if (!/^\S+@\S+\.\S+$/.test(newUser.value.email)) {
+    errors.value.email = "Introduce un correo válido.";
+  }
+
+  if (!newUser.value.password) {
+    errors.value.password = "La contraseña es obligatoria.";
+  } else if (newUser.value.password.length < 8) {
+    errors.value.password = "Debe tener al menos 8 caracteres.";
+  }
+
+  if (newUser.value.confirmPassword !== newUser.value.password) {
+    errors.value.confirmPassword = "Las contraseñas no coinciden.";
+  }
+
+  return Object.values(errors.value).every((error) => error === "");
+};
+
+// ✅ Registrar usuario y redirigir a la vista de negocio
 const registerUser = async () => {
-  errorMessage.value = "";
   successMessage.value = "";
 
-  if (!newUser.value.email || !newUser.value.password) {
-    errorMessage.value = "Todos los campos son obligatorios.";
-    return;
-  }
-  if (newUser.value.password.length < 8) {
-    errorMessage.value = "La contraseña debe tener al menos 8 caracteres.";
-    return;
-  }
+  if (!validateForm()) return;
 
   try {
     loading.value = true;
-    await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, newUser.value);
-    successMessage.value = "Cuenta creada con éxito. Revisa tu correo.";
-    newUser.value = { email: "", password: "" };
+
+    // 🔥 Petición de registro
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
+      email: newUser.value.email,
+      password: newUser.value.password,
+    });
+
+    // ✅ Guardar el token recibido
+    const token = response.data.access_token;
+    authStore.token = token;
+    localStorage.setItem("token", token);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    // ✅ Obtener los datos del usuario autenticado
+    const user = await authStore.fetchUser();
+
+    successMessage.value = "Cuenta creada con éxito. Redirigiendo...";
+
+    // 🔀 Redirigir al formulario de negocio con el `userId`
+    setTimeout(() => {
+      router.push(`/register-business?userId=${user.id}`);
+    }, 1500);
   } catch (error: any) {
-    if (error.response && error.response.status === 409) {
-      errorMessage.value = "El correo ya está registrado.";
+    if (error.response?.status === 409) {
+      errors.value.email = "El correo ya está registrado.";
     } else {
-      errorMessage.value = "Error al registrar usuario. Inténtalo más tarde.";
+      errors.value.email = "Error al registrar usuario. Inténtalo más tarde.";
     }
-    console.error(error);
   } finally {
     loading.value = false;
   }
 };
 </script>
 
+
+
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
     <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-      <h2 class="text-2xl font-bold text-gray-800 text-center">Crea tu cuenta</h2>
-      <p class="text-gray-500 text-center mb-4">Regístrate en minutos</p>
+      <h2 class="text-2xl font-bold text-green-600 text-center">Crea tu cuenta</h2>
+      <p class="text-gray-700 text-center mb-4">Regístrate en minutos</p>
 
-      <p v-if="errorMessage" class="text-red-500 text-center">{{ errorMessage }}</p>
-      <p v-if="successMessage" class="text-green-500 text-center">{{ successMessage }}</p>
+      <p v-if="successMessage" class="text-green-500 text-center mb-4 animate-pulse">{{ successMessage }}</p>
 
-      <div class="mt-4">
-        <label class="block text-gray-700">Correo Electrónico</label>
-        <input
-          type="email"
-          v-model="newUser.email"
-          class="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Introduce tu correo"
-        />
-      </div>
+      <form @submit.prevent="registerUser">
+        <!-- Correo Electrónico -->
+        <div class="mt-4">
+          <label class="block text-gray-900">Correo Electrónico</label>
+          <input
+            type="email"
+            v-model="newUser.email"
+            class="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Introduce tu correo"
+          />
+          <p v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</p>
+        </div>
 
-      <div class="mt-4">
-        <label class="block text-gray-700">Contraseña</label>
-        <input
-          type="password"
-          v-model="newUser.password"
-          class="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Crea una contraseña"
-        />
-        <p class="text-sm text-gray-500 mt-1">Debe tener al menos 8 caracteres.</p>
-      </div>
+        <!-- Contraseña -->
+        <div class="mt-4 relative">
+          <label class="block text-gray-900">Contraseña</label>
+          <div class="relative">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="newUser.password"
+              class="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+              placeholder="Crea una contraseña"
+            />
+            <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-3 text-gray-600">
+              <span v-if="!showPassword">👁️</span>
+              <span v-else>🙈</span>
+            </button>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Debe tener al menos 8 caracteres.</p>
+          <p v-if="errors.password" class="text-red-500 text-sm">{{ errors.password }}</p>
+        </div>
 
-      <button
-        @click="registerUser"
-        :disabled="loading"
-        class="w-full bg-blue-600 text-white py-2 mt-6 rounded-md hover:bg-blue-700 transition disabled:opacity-50">
-        {{ loading ? "Registrando..." : "Registrarse" }}
-      </button>
+        <!-- Confirmación de contraseña -->
+        <div class="mt-4 relative">
+          <label class="block text-gray-900">Confirmar Contraseña</label>
+          <div class="relative">
+            <input
+              :type="showConfirmPassword ? 'text' : 'password'"
+              v-model="newUser.confirmPassword"
+              class="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+              placeholder="Repite la contraseña"
+            />
+            <button type="button" @click="showConfirmPassword = !showConfirmPassword" class="absolute right-3 top-3 text-gray-600">
+              <span v-if="!showConfirmPassword">👁️</span>
+              <span v-else>🙈</span>
+            </button>
+          </div>
+          <p v-if="errors.confirmPassword" class="text-red-500 text-sm">{{ errors.confirmPassword }}</p>
+        </div>
 
-      <p class="text-gray-600 text-center mt-4">
-        ¿Ya tienes una cuenta? <a href="/login" class="text-blue-600 hover:underline">Inicia sesión</a>
+        <button 
+          class="w-full bg-green-600 text-white py-2 mt-6 rounded-md hover:bg-green-700 transition duration-300"
+          :disabled="loading"
+        >
+          {{ loading ? "Registrando..." : "Registrarse" }}
+        </button>
+      </form>
+
+      <p class="text-center text-gray-600 text-sm mt-4">
+        ¿Ya tienes cuenta? <router-link to="/login" class="text-green-600 hover:underline">Inicia sesión</router-link>
       </p>
     </div>
   </div>
 </template>
+

@@ -22,8 +22,15 @@ export class UserController {
     return this.userService.update(id, userData);
   }
 
+  // ✅ Nueva ruta para reactivar un usuario
+  @Patch(':id/reactivate')
+  reactivate(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.update(id, { active: true });
+  }
+
+  // ✅ Ahora solo desactiva en vez de eliminar
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
+  deactivate(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(id);
   }
 }

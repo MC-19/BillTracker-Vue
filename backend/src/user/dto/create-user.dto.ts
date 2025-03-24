@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, MinLength, IsOptional, IsString, IsBoolean } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -20,4 +20,8 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   lastName2?: string | null;
+
+  @IsOptional() // ✅ Permite definir si el usuario será activo al crearlo
+  @IsBoolean()
+  active?: boolean;
 }
