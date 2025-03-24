@@ -38,20 +38,23 @@ export const useAuthStore = defineStore("auth", {
 
     async fetchUser() {
       if (!this.token) return;
-
+    
       try {
-        // ✅ Asegurar que el token se envía en los headers
+        console.log("📡 Haciendo petición a /auth/me con token:", this.token);
+        
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, {
           headers: { Authorization: `Bearer ${this.token}` },
         });
-
+    
+        console.log("✅ Usuario autenticado recibido:", response.data);
+    
         this.user = response.data;
         localStorage.setItem("user", JSON.stringify(this.user));
       } catch (error) {
         console.error("❌ Error obteniendo el usuario:", error);
         this.logout();
       }
-    },
+    }    
   },
 
   getters: {

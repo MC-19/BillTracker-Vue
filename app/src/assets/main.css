@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@media (min-resolution: 2.5dppx) {
+    .reversed-on-zoom {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+
+.left-image {
+  left: 90px;
+}

@@ -19,29 +19,16 @@
 
       <!-- Botones -->
       <div class="hidden xl:flex space-x-3 whitespace-nowrap">
-        <template v-if="!authStore.isAuthenticated">
-          <router-link to="/login">
-            <button class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-              Acceder
-            </button>
-          </router-link>
-          <router-link to="/register">
-            <button class="px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
-              Regístrate gratis
-            </button>
-          </router-link>
-        </template>
-
-        <template v-else>
-          <router-link to="/dashboard">
-            <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-200">
-              Mi Cuenta
-            </button>
-          </router-link>
-          <button @click="logout" class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-            Cerrar sesión
+        <a href="http://localhost:5174/login">
+          <button class="px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+            Acceder
           </button>
-        </template>
+        </a>
+        <a href="http://localhost:5174/register">
+          <button class="px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
+            Regístrate gratis
+          </button>
+        </a>
       </div>
 
       <!-- Botón menú hamburguesa -->
@@ -65,37 +52,20 @@
         <li><a href="#" class="block py-2 hover:text-green-700 transition-all duration-200" @click="closeMenu">Recursos ▾</a></li>
 
         <!-- Botones en menú móvil -->
-        <template v-if="!authStore.isAuthenticated">
-          <li class="pt-4">
-            <router-link to="/login" @click="closeMenu">
-              <button class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-                Acceder
-              </button>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/register" @click="closeMenu">
-              <button class="w-full px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
-                Regístrate gratis
-              </button>
-            </router-link>
-          </li>
-        </template>
-
-        <template v-else>
-          <li class="pt-4">
-            <router-link to="/dashboard" @click="closeMenu">
-              <button class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-200">
-                Mi Cuenta
-              </button>
-            </router-link>
-          </li>
-          <li>
-            <button @click="logout" class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
-              Cerrar sesión
+        <li class="pt-4">
+          <a href="http://localhost:5174/login" @click="closeMenu">
+            <button class="w-full px-4 py-2 border border-gray-600 text-gray-800 rounded-full hover:bg-gray-200 transition-all duration-200">
+              Acceder
             </button>
-          </li>
-        </template>
+          </a>
+        </li>
+        <li>
+          <a href="http://localhost:5174/register" @click="closeMenu">
+            <button class="w-full px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all duration-200">
+              Regístrate gratis
+            </button>
+          </a>
+        </li>
       </ul>
     </div>
   </header>
@@ -103,11 +73,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
 
-const router = useRouter();
-const authStore = useAuthStore();
 const menuAbierto = ref(false);
 
 // ✅ Función para abrir/cerrar el menú móvil
@@ -118,12 +84,5 @@ const toggleMenu = () => {
 // ✅ Función para cerrar el menú al hacer clic en un enlace
 const closeMenu = () => {
   menuAbierto.value = false;
-};
-
-// ✅ Función para cerrar sesión y redirigir al login
-const logout = () => {
-  authStore.logout();
-  router.push("/login");
-  closeMenu();
 };
 </script>

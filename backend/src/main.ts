@@ -4,16 +4,23 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // ✅ Asegurar que `origin` se configure bien
+  const allowedOrigins = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",") : ["http://localhost:5173", "http://localhost:5174"];
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173", // ⚠️ Usar variable de entorno
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization"
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   });
 
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  console.log(`Backend corriendo en http://localhost:${port}`);
+  await app.listen(3000);
+  console.log(`✅ Backend corriendo en http://localhost:3000`);
 }
-
 bootstrap();
-
