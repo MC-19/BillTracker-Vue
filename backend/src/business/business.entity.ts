@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
-//import { Sector } from '../sector/sector.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany, JoinTable } from 'typeorm';
+import { Sector } from '../sector/sector.entity';
 import { UserBusiness } from '../user-business/user-business.entity';
 
 @Entity({ name: 'businesses' })
@@ -31,8 +31,10 @@ export class Business {
   @Column({ type: 'text', nullable: false })
   pais: string;
 
-  //@ManyToOne(() => Sector, (sector) => sector.businesses, { onDelete: 'SET NULL', nullable: true })
-  //sector: Sector | null;
+  // ✅ Relación ManyToMany con Sector
+  @ManyToMany(() => Sector, (sector) => sector.businesses)
+  @JoinTable({ name: 'business_sector' }) // Crea la tabla intermedia
+  sectors: Sector[];
 
   @OneToMany(() => UserBusiness, (userBusiness) => userBusiness.business)
   userBusinesses: UserBusiness[];

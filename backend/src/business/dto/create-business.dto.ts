@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsArray, ArrayNotEmpty, IsInt } from 'class-validator';
 
 export class CreateBusinessDto {
   @IsNotEmpty()
@@ -34,5 +34,7 @@ export class CreateBusinessDto {
   pais: string;
 
   @IsOptional()
-  sectorId?: number;
+  @IsArray()
+  @IsInt({ each: true })
+  sectorIds?: number[];
 }

@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsArray, IsInt } from 'class-validator';
 
 export class UpdateBusinessDto {
   @IsOptional()
@@ -34,5 +34,7 @@ export class UpdateBusinessDto {
   pais?: string;
 
   @IsOptional()
-  sectorId?: number;
+  @IsArray()
+  @IsInt({ each: true })
+  sectorIds?: number[];
 }
