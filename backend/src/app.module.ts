@@ -5,10 +5,13 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { SectorModule } from './sector/sector.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // ✅ Habilita .env en toda la app
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -20,14 +23,18 @@ import { SectorModule } from './sector/sector.module';
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: process.env.NODE_ENV !== 'production', // ⚠️ Solo en desarrollo
+        synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
     UserModule,
     AuthModule,
     MailModule,
-    SectorModule
+    SectorModule,
+    CategoryModule,
   ],
+  controllers: [AppController], // 👈 ESTO FALTABA
+  providers: [AppService],      // 👈 ESTO TAMBIÉN
 })
 export class AppModule {}
+
 

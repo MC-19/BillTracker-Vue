@@ -18,11 +18,20 @@ export class SectorService {
   }
 
   async findAll(): Promise<Sector[]> {
-    return this.sectorRepository.find({ relations: ['businesses'] });
+    return this.sectorRepository.find({
+      relations: ['businesses', 'categories'],
+      order: {
+        label: 'ASC',
+        categories: { name: 'ASC' },
+      },
+    });
   }
 
   async findOne(id: number): Promise<Sector> {
-    const sector = await this.sectorRepository.findOne({ where: { id }, relations: ['businesses'] });
+    const sector = await this.sectorRepository.findOne({
+      where: { id },
+      relations: ['businesses', 'categories'],
+    });
     if (!sector) {
       throw new NotFoundException('Sector no encontrado');
     }

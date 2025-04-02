@@ -1,0 +1,15 @@
+[
+    { "slug": "education", "label": "Formación" },
+    { "slug": "hospitality", "label": "Hostelería" },
+    { "slug": "real-estate", "label": "Inmobiliario" },
+    { "slug": "construction-and-repairs", "label": "Reformas, reparaciones e instalaciones" },
+    { "slug": "health-and-wellness", "label": "Salud y Bienestar" },
+    { "slug": "leisure-and-travel", "label": "Actividades lúdicas y Viajes" },
+    { "slug": "agriculture-and-livestock", "label": "Agricultura/Ganadería" },
+    { "slug": "associations", "label": "Asociaciones" },
+    { "slug": "commerce", "label": "Comercio" },
+    { "slug": "marketing-and-arts", "label": "Servicios artísticos & Márketing" },
+    { "slug": "professional-services", "label": "Servicios Profesionales" },
+    { "slug": "technology-services", "label": "Servicios tecnológicos -IT" },
+    { "slug": "transport", "label": "Transporte" }
+]
