@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany, JoinTable, ManyToOne } from 'typeorm';
 import { Sector } from '../sector/sector.entity';
 import { UserBusiness } from '../user-business/user-business.entity';
+import { PaymentMethod } from '../payment-method/payment-method.entity';
 
 @Entity({ name: 'businesses' })
 export class Business {
@@ -44,4 +45,8 @@ export class Business {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => PaymentMethod, (method) => method.businesses, { nullable: true })
+  paymentMethod: PaymentMethod | null;
+
 }

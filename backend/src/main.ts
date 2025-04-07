@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DataSource } from 'typeorm';
 import { seedSectors } from './seed/sector.seed';
 import { seedCategories } from './seed/category.seed';
+import { seedPaymentMethods } from './seed/payment-method.seed';
 import './config/env'; // si usás carga dinámica de .env (opcional)
 
 async function bootstrap() {
@@ -31,6 +32,7 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'development') {
     const sectorCount = await dataSource.getRepository('sector').count();
     const categoryCount = await dataSource.getRepository('category').count();
+    const paymentMethodCount = await dataSource.getRepository('payment_methods').count();
 
     if (sectorCount === 0) {
       console.log('🌱 Insertando sectores...');
@@ -44,6 +46,13 @@ async function bootstrap() {
       await seedCategories(dataSource);
     } else {
       console.log('✅ Categorías ya insertadas');
+    }
+
+    if (paymentMethodCount === 0) {
+      console.log('🌱 Insertando métodos de pago...');
+      await seedPaymentMethods(dataSource);
+    } else {
+      console.log('✅ Métodos de pago ya insertados');
     }
   }
 

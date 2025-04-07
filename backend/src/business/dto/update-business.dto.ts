@@ -37,4 +37,8 @@ export class UpdateBusinessDto {
   @IsArray()
   @IsInt({ each: true })
   sectorIds?: number[];
+
+  @IsOptional()
+  @IsInt()
+  paymentMethodId?: number; // ✅ nuevo campo
 }

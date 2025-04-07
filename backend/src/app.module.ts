@@ -8,6 +8,7 @@ import { SectorModule } from './sector/sector.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoryModule } from './category/category.module';
+import { PaymentMethod } from './payment-method/payment-method.entity';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CategoryModule } from './category/category.module';
     MailModule,
     SectorModule,
     CategoryModule,
+    PaymentMethod
   ],
   controllers: [AppController], // 👈 ESTO FALTABA
   providers: [AppService],      // 👈 ESTO TAMBIÉN

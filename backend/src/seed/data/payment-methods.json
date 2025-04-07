@@ -1,0 +1,8 @@
+[
+    { "slug": "transfer", "label": "Transferencia" },
+    { "slug": "direct-debit", "label": "Domiciliación" },
+    { "slug": "cash", "label": "Efectivo" },
+    { "slug": "cash-on-delivery", "label": "Contra reembolso" },
+    { "slug": "bizum", "label": "Bizum" },
+    { "slug": "other", "label": "Otro" }
+]
