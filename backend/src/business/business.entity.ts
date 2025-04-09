@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { Sector } from '../sector/sector.entity';
 import { UserBusiness } from '../user-business/user-business.entity';
 import { PaymentMethod } from '../payment-method/payment-method.entity';
+import { Client } from '../client/client.entity';
 
 @Entity({ name: 'businesses' })
 export class Business {
@@ -32,9 +33,8 @@ export class Business {
   @Column({ type: 'text', nullable: false })
   pais: string;
 
-  // ✅ Relación ManyToMany con Sector
   @ManyToMany(() => Sector, (sector) => sector.businesses)
-  @JoinTable({ name: 'business_sector' }) // Crea la tabla intermedia
+  @JoinTable({ name: 'business_sector' })
   sectors: Sector[];
 
   @OneToMany(() => UserBusiness, (userBusiness) => userBusiness.business)
@@ -49,4 +49,6 @@ export class Business {
   @ManyToOne(() => PaymentMethod, (method) => method.businesses, { nullable: true })
   paymentMethod: PaymentMethod | null;
 
+  @ManyToMany(() => Client, (client) => client.businesses)
+  clients: Client[];
 }
