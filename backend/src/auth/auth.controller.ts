@@ -22,8 +22,10 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
+    const user = await this.authService.register(createUserDto);
+    return this.authService.login(user); // 🔥 Devuelve el token tras registrar
   }
+  
 
   // ✅ Nuevo endpoint protegido con JWT
   @Get('me')

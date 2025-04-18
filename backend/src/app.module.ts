@@ -4,10 +4,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { SectorModule } from './sector/sector.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { CategoryModule } from './category/category.module';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
+import { ClientModule } from './client/client.module';
+import { BusinessModule } from './business/business.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // ✅ Habilita .env en toda la app
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -19,13 +26,21 @@ import { MailModule } from './mail/mail.module';
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: process.env.NODE_ENV !== 'production', // ⚠️ Solo en desarrollo
+        synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
-    UserModule,
     AuthModule,
     MailModule,
+    BusinessModule,
+    UserModule,
+    SectorModule,
+    CategoryModule,
+    PaymentMethodModule, // ✅ así sí
+    ClientModule,
   ],
+  controllers: [AppController], // 👈 ESTO FALTABA
+  providers: [AppService],      // 👈 ESTO TAMBIÉN
 })
 export class AppModule {}
+
 

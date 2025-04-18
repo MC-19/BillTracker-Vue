@@ -1,4 +1,7 @@
 # 🚀 BillTracker
+npm run start:dev backend
+npm run start:prod backend
+
 
 **BillTracker** es una plataforma para la gestión de facturación, desarrollada con **Vue 3 + TypeScript + Vite** en el frontend y **NestJS** en el backend.
 

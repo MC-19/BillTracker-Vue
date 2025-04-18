@@ -1,0 +1,454 @@
+[
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "Agencia de viajes"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "Alquiler de coches"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "camping"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "catering"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "eventos"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "Gestion actividades culturales"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "Guia turistico"
+  },
+  {
+    "sectorSlug": "leisure-and-travel",
+    "category": "Servicios nauticos"
+  },
+  {
+    "sectorSlug": "agriculture-and-livestock",
+    "category": "Agricultura"
+  },
+  {
+    "sectorSlug": "agriculture-and-livestock",
+    "category": "ganaderia"
+  },
+  {
+    "sectorSlug": "associations",
+    "category": "Asociacion sun animo de lucro"
+  },
+  {
+    "sectorSlug": "associations",
+    "category": "club deportivo"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Alimentacion"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Comercial"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Comercio electronico"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Comercio mayorista"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "minorista"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Compra-Venta"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Distribucion"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Fabricacion de productos"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Floristeria"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Importacion/Exportacion"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Intermediario del comercio"
+  },
+  {
+    "sectorSlug": "commerce",
+    "category": "Textil y moda"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "Academia idiomas"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "Apoyo escolar"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "autoescuela"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "escuela de negocios"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "formacion online formacion rpesencial"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "profesional"
+  },
+  {
+    "sectorSlug": "education",
+    "category": "profesor"
+  },
+  {
+    "sectorSlug": "hospitality",
+    "category": "bar/cafeteria"
+  },
+  {
+    "sectorSlug": "hospitality",
+    "category": "hotel"
+  },
+  {
+    "sectorSlug": "hospitality",
+    "category": "restaurante"
+  },
+  {
+    "sectorSlug": "real-estate",
+    "category": "Agencia inmobiliaria"
+  },
+  {
+    "sectorSlug": "real-estate",
+    "category": "Alquilker pisis/trasteros"
+  },
+  {
+    "sectorSlug": "real-estate",
+    "category": "Alquiler vacacional"
+  },
+  {
+    "sectorSlug": "real-estate",
+    "category": "Asesor inmobiliario"
+  },
+  {
+    "sectorSlug": "real-estate",
+    "category": "Coworking"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "Albañileria"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "Carpinteria metalica y de madera"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "Cerrajeria"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "Climatizacion"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "Construcciomn-reformas en general"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "cristaleria"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "electricidad"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "fontaneria"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "instalaciones electricas"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "jardines y piscinas"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "limpieza"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "mantenimiento"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "pintura"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "reparacion de electrodomesticos"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "reparacion del hogar"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "seguridad"
+  },
+  {
+    "sectorSlug": "construction-and-repairs",
+    "category": "taller mecanico"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "belelza e imagen"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "coaching y desarrollo personal"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "cosmetica e higiene"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "cuidados"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "deportes"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "dietetica y nutricion"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "estetica"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "fisioterapeuta-osteopata"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "logopeda"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "odontologia"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "peluqueria"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "psicologia"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "sercvicios medicos"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "terapias alternativas"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "Veterinaria"
+  },
+  {
+    "sectorSlug": "health-and-wellness",
+    "category": "Yoga y pilates"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": " artes escenicas y espectaculos"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "artes graficas"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "artesania"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "audiovisual"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "copiesteria-imprenta"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "diseño grafico"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "diseño web"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "marketing digital"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "produccion artistica"
+  },
+  {
+    "sectorSlug": "marketing-and-arts",
+    "category": "publicidad"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "abogado"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "admon de fincas"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "arquitecto"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "asesoria empresas"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "asistenca virtual"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "consultor comercial-desarrollo de negocio"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "consultor financiero"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "consultoria empresas"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "diseño interiores"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "externalizacion servicios"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "fotografo"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "gestoria"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "ingeniero"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "seguros"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "servicios de comunicación"
+  },
+  {
+    "sectorSlug": "professional-services",
+    "category": "traduccion e interpretacion"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "consultor tecnologico"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "desarrollo de software"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "diseño aplicaciones"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "hostin"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "I+D+I"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "Reparacion ordenadores"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "Servicios web"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "software as a service"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "soporte tecnico"
+  },
+  {
+    "sectorSlug": "technology-services",
+    "category": "telecomunicaciones"
+  },
+  {
+    "sectorSlug": "transport",
+    "category": "alquiler vehiculos"
+  },
+  {
+    "sectorSlug": "transport",
+    "category": "mudanzas"
+  },
+  {
+    "sectorSlug": "transport",
+    "category": "taxista"
+  },
+  {
+    "sectorSlug": "transport",
+    "category": "Transporte de mercancías"
+  },
+  {
+    "sectorSlug": "transport",
+    "category": "Transporte de personas"
+  }
+]
