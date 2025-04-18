@@ -28,7 +28,6 @@ import { BusinessModule } from './business/business.module';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
         synchronize: process.env.NODE_ENV !== 'production',
-        synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
     AuthModule,
