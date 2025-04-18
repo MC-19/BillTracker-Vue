@@ -15,6 +15,7 @@ import { BusinessModule } from './business/business.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -26,6 +27,7 @@ import { BusinessModule } from './business/business.module';
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
+        synchronize: process.env.NODE_ENV !== 'production',
         synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
@@ -42,5 +44,6 @@ import { BusinessModule } from './business/business.module';
   providers: [AppService],      // 👈 ESTO TAMBIÉN
 })
 export class AppModule {}
+
 
 
