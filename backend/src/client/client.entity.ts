@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Business } from '../business/business.entity';
 import { PaymentMethod } from '../payment-method/payment-method.entity';
@@ -58,14 +60,14 @@ export class Client {
   @Column({ type: 'text', nullable: true })
   informacionAdicional?: string;
 
-  /** Many-to-Many puro con Business */
-  @ManyToMany(() => Business, (b) => b.clients)
-  @JoinTable({
-    name: 'client_business',
-    joinColumn:    { name: 'client_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'business_id', referencedColumnName: 'id' },
+  /** FK al negocio propietario */
+  @Column() businessId: number;
+
+  @ManyToOne(() => Business, b => b.clients, {
+    onDelete: 'CASCADE',
   })
-  businesses: Business[];
+  @JoinColumn({ name: 'businessId' })
+  business: Business;
 
   /** Método de pago */
   @ManyToMany(() => PaymentMethod, (pm) => pm.clients)

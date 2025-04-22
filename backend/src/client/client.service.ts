@@ -23,18 +23,14 @@ export class ClientService {
   private relations = ['businesses', 'paymentMethods'];
 
   async create(dto: CreateClientDto): Promise<Client> {
-    const { businessIds = [], paymentMethodIds = [], ...data } = dto;
-
-    // Creamos el cliente base
+    const { businessId, paymentMethodIds = [], ...data } = dto;
     const client = this.clientRepo.create(data);
 
     // Cargamos y validamos negocios
-    if (businessIds.length) {
-      const businesses = await this.businessRepo.find({ where: { id: In(businessIds) } });
-      if (businesses.length !== businessIds.length) {
-        throw new BadRequestException('Algunas empresas no existen');
-      }
-      client.businesses = businesses;
+    if (businessId) {
+      const biz = await this.businessRepo.findOneBy({ id: businessId });
+      if (!biz) throw new BadRequestException('Empresa no existe');
+      client.business = biz;
     }
 
     // Cargamos y validamos métodos de pago
@@ -68,34 +64,29 @@ export class ClientService {
   }
 
   async update(id: number, dto: UpdateClientDto): Promise<Client> {
-    // 1) Esto ya lanza si no existe, y devuelve un Client (nunca null)
     const client = await this.findOne(id);
+    const { businessId, paymentMethodIds, ...data } = dto;
   
-    const { businessIds, paymentMethodIds, ...data } = dto;
-  
-    // 2) Actualizo campos escalares  
+    // 1) Campos escalares
     if (Object.keys(data).length) {
       await this.clientRepo.update(id, data);
     }
   
-    // 3) Cargo relaciones si vienen en el DTO
-    if (businessIds) {
-      if (businessIds.length) {
-        const businesses = await this.businessRepo.find({ where: { id: In(businessIds) } });
-        if (businesses.length !== businessIds.length) {
-          throw new BadRequestException('Algunas empresas no existen');
-        }
-        client.businesses = businesses;
-      } else {
-        client.businesses = [];
-      }
+    // 2) Asignar businessId
+    if (businessId !== undefined) {
+      const biz = await this.businessRepo.findOneBy({ id: businessId });
+      if (!biz) throw new BadRequestException('Empresa no existe');
+      client.business = biz;
     }
   
-    if (paymentMethodIds) {
+    // 3) Relación N–N con PaymentMethod
+    if (paymentMethodIds !== undefined) {
       if (paymentMethodIds.length) {
-        const methods = await this.paymentMethodRepo.find({ where: { id: In(paymentMethodIds) } });
+        const methods = await this.paymentMethodRepo.find({
+          where: { id: In(paymentMethodIds), businessId: client.business.id }
+        });
         if (methods.length !== paymentMethodIds.length) {
-          throw new BadRequestException('Algunos métodos de pago no existen');
+          throw new BadRequestException('Método de pago inválido');
         }
         client.paymentMethods = methods;
       } else {
@@ -103,8 +94,7 @@ export class ClientService {
       }
     }
   
-    // 4) Aquí TS sabe que `client` nunca es null
     await this.clientRepo.save(client);
     return this.findOne(id);
-  }  
+  }
 }

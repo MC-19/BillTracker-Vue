@@ -31,8 +31,8 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'development') {
     try {
       // Comprobamos y ejecutamos seeds en paralelo
-      const sectorRepo = dataSource.getRepository('sector');
-      const categoryRepo = dataSource.getRepository('category');
+      const sectorRepo = dataSource.getRepository('sectors');
+      const categoryRepo = dataSource.getRepository('categories');
       const paymentRepo = dataSource.getRepository('payment_methods');
 
       const [sectorCount, categoryCount, paymentCount] = await Promise.all([

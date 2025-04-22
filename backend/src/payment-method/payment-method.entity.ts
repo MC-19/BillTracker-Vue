@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Business } from '../business/business.entity';
 import { Client } from '../client/client.entity';
@@ -19,7 +21,10 @@ export class PaymentMethod {
   @Column({ type: 'varchar', length: 50 })
   label: string;
 
-  /** Cada método puede aplicarse a muchas empresas */
+  /** FK al negocio propietario */
+  @Column({ nullable: true }) // <--- esto es lo que te falta
+  businessId: number;
+
   @ManyToMany(() => Business, (b) => b.paymentMethods)
   businesses: Business[];
 

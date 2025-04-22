@@ -62,7 +62,6 @@ export class Business {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  /** Ahora N–N con PaymentMethod */
   @ManyToMany(() => PaymentMethod, (pm) => pm.businesses)
   @JoinTable({
     name: 'business_payment_method',
@@ -71,8 +70,11 @@ export class Business {
   })
   paymentMethods: PaymentMethod[];
 
-  /** Many-to-Many puro con Client */
-  @ManyToMany(() => Client, (c) => c.businesses)
+  /** 1–N con Client */
+  @OneToMany(() => Client, c => c.business, {
+    cascade: ['insert','update'],
+    eager: true,
+  })
   clients: Client[];
 
 }

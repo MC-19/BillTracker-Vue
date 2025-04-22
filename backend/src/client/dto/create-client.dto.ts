@@ -59,10 +59,8 @@ export class CreateClientDto {
   informacionAdicional?: string;
 
   @IsOptional()
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsInt({ each: true })
-  businessIds?: number[];
+  @IsInt()
+  businessId?: number;
 
   @IsOptional()
   @IsArray()

@@ -36,7 +36,7 @@ import { BusinessModule } from './business/business.module';
     UserModule,
     SectorModule,
     CategoryModule,
-    PaymentMethodModule, // ✅ así sí
+    PaymentMethodModule,
     ClientModule,
   ],
   controllers: [AppController], // 👈 ESTO FALTABA
