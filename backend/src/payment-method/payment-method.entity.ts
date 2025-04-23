@@ -15,7 +15,7 @@ export class PaymentMethod {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 50, unique: true })
+  @Column({ type: 'varchar', length: 50 })
   slug: string;
 
   @Column({ type: 'varchar', length: 50 })

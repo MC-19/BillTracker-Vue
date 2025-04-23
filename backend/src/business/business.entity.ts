@@ -13,6 +13,7 @@ import { Sector } from '../sector/sector.entity';
 import { UserBusiness } from '../user-business/user-business.entity';
 import { PaymentMethod } from '../payment-method/payment-method.entity';
 import { Client } from 'src/client/client.entity';
+import { SerieFactura } from 'src/series/serie-factura.entity';
 
 @Entity({ name: 'businesses' })
 export class Business {
@@ -77,4 +78,9 @@ export class Business {
   })
   clients: Client[];
 
+
+  @OneToMany(() => SerieFactura, (serie) => serie.business, {
+    cascade: true,
+  })
+  series: SerieFactura[];
 }

@@ -31,4 +31,12 @@ export class BusinessController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.businessService.remove(id);
   }
+
+  @Post(':id/series')
+  createSerie(
+    @Param('id') id: number,
+    @Body('codigo') codigo: string
+  ) {
+    return this.businessService.createSerie(id, codigo);
+  }
 }

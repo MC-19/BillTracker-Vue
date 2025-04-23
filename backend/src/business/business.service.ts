@@ -6,6 +6,7 @@ import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Sector } from '../sector/sector.entity';
 import { PaymentMethod } from '../payment-method/payment-method.entity';
+import { SerieFactura } from '../series/serie-factura.entity';
 
 @Injectable()
 export class BusinessService {
@@ -16,6 +17,8 @@ export class BusinessService {
     private readonly sectorRepository: Repository<Sector>,
     @InjectRepository(PaymentMethod)
     private readonly paymentMethodRepository: Repository<PaymentMethod>,
+    @InjectRepository(SerieFactura)
+    private readonly serieRepo: Repository<SerieFactura>, // <-- falta esto
   ) {}
 
   async create(dto: CreateBusinessDto): Promise<Business> {
@@ -71,5 +74,13 @@ export class BusinessService {
   async remove(id: number): Promise<void> {
     const business = await this.findOne(id);
     await this.businessRepository.remove(business);
+  }
+
+  async createSerie(businessId: number, codigo: string): Promise<SerieFactura> {
+    const business = await this.businessRepository.findOne({ where: { id: businessId } });
+    if (!business) throw new NotFoundException('Empresa no encontrada');
+  
+    const serie = this.serieRepo.create({ codigo, contador: 1, business });
+    return this.serieRepo.save(serie);
   }
 }

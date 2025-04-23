@@ -1,3 +1,4 @@
+import { SerieFacturaController } from './series/serie-factura.controller';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,7 +12,7 @@ import { CategoryModule } from './category/category.module';
 import { PaymentMethodModule } from './payment-method/payment-method.module';
 import { ClientModule } from './client/client.module';
 import { BusinessModule } from './business/business.module';
-
+import { SerieFacturaModule } from './series/serie-factura.module'; // ruta correcta
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -38,6 +39,7 @@ import { BusinessModule } from './business/business.module';
     CategoryModule,
     PaymentMethodModule,
     ClientModule,
+    SerieFacturaModule,
   ],
   controllers: [AppController], // 👈 ESTO FALTABA
   providers: [AppService],      // 👈 ESTO TAMBIÉN
